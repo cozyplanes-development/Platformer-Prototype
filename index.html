@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>Platformer Prototype</title>
+	<link rel="stylesheet" href="ui/ui.css">
+	<script src="FPS.js"></script>
+</head>
+
+<body>
+ 	<audio id="myAudio" autoplay loop>
+		<source src="audio/theme.mp3" type="audio/mpeg">
+		Your browser does not support this audio format.
+	</audio>
+	<div id="start">
+		<div class="heading">
+			<div class="MenuName-r">R</div>
+			<div class="MenuName-g">G</div>
+			<div class="MenuName-b">Block</div>
+		</div>
+		<div id="startText">PRESS ENTER TO START</div>
+		<div id="toControls">Toggle <span>"H"</span> for Help</div>
+	</div>
+	<div id="controls">
+		<img src="images/controls.jpg">
+		<div id="fromControls">Press <span>"H"</span> to go back</div>
+	</div>
+
+	<canvas id="canvas" width="800" height="600"></canvas>
+
+	<!--GameEngine -->
+	<script src="gameEngine.js"></script>
+</body>    
+</html>

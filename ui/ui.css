@@ -1,0 +1,110 @@
+/*Font Face*/
+@font-face {
+    font-family: PixelFont;
+    src: url("font/slkscr.ttf");
+}
+
+body {
+	background: #000;
+	width: 800px;
+	margin: 0 auto;
+}
+
+canvas {
+	padding-top: 30px;
+    display: none;
+}
+
+#controls {
+    text-align: center;
+    display: none;
+}
+
+/*Animation for blinking text*/
+@keyframes blinker {  
+  50% { opacity: 0.0; }
+}
+
+#start {
+    margin: 180px 0;
+}
+
+.heading {
+	display: flex; /* or inline-flex */
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+}
+
+#startText {
+	color: #fff;
+	font-size: 28px;
+	font-family: PixelFont;
+    text-align: right;
+    padding-right: 10%;
+    animation: blinker 1s linear infinite;
+}
+
+#toControls {
+    color: #FFF;
+    font-size: 20px;
+    font-family: PixelFont;
+    padding-right: 10%;
+    position: relative;
+    top: 160px;
+    left: 15px;
+}
+
+#fromControls {
+    color: #FFF;
+    font-size: 20px;
+    font-family: PixelFont;
+    padding-bottom: 10%;  
+}
+
+.MenuName-r {
+    float: left;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: none;
+    padding: 5px;
+    font-family: PixelFont;
+    font-size: 130px;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 5px rgb(255,255,255) , 0 0 10px rgb(255,255,255) , 0 0 15px rgb(255,255,255) , 0 0 20px rgb(255, 0, 0) , 0 0 35px rgb(255, 0, 0) , 0 0 40px rgb(255, 0, 0) , 0 0 50px rgb(255, 0, 0) , 0 0 75px rgb(255, 0, 0);
+}
+
+.MenuName-g {
+    float: left;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: none;
+    padding: 5px;
+    font-family: PixelFont;
+    font-size: 130px;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 5px rgb(255,255,255) , 0 0 10px rgb(255,255,255) , 0 0 15px rgb(255,255,255) , 0 0 20px rgb(111, 222, 65) , 0 0 35px rgb(111, 222, 65) , 0 0 40px rgb(111, 222, 65) , 0 0 50px rgb(111, 222, 65) , 0 0 75px rgb(111, 222, 65);
+}
+
+.MenuName-b {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: none;
+    padding: 5px;
+    font-family: PixelFont;
+    font-size: 130px;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 5px rgb(255,255,255) , 0 0 10px rgb(255,255,255) , 0 0 15px rgb(255,255,255) , 0 0 20px rgb(129, 202, 255) , 0 0 35px rgb(129, 202, 255) , 0 0 40px rgb(129, 202, 255) , 0 0 50px rgb(129, 202, 255) , 0 0 75px rgb(129, 202, 255);
+}
