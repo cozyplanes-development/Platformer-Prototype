@@ -58,43 +58,11 @@
     console.clear();
   },1500);*/
 
-/* -------------------------------------------------------------------------------------------------------------- 
-                                             Manage Frames Per Second
-  -------------------------------------------------------------------------------------------------------------- */
-
-  var meter = new FPSMeter({
-        interval:  100,     // Update interval in milliseconds.
-        smoothing: 10,      // Spike smoothing strength. 1 means no smoothing.
-        show:      'fps',   // Whether to show 'fps', or 'ms' = frame duration in milliseconds.
-        toggleOn:  'click', // Toggle between show 'fps' and 'ms' on this event.
-        decimals:  1,       // Number of decimals in FPS number. 1 = 59.9, 2 = 59.94, ...
-        maxFps:    60,      // Max expected FPS value.
-        threshold: 100,     // Minimal tick reporting interval in milliseconds.
-
-        // Meter position
-        position: 'relative', // Meter position.
-        zIndex:   10,         // Meter Z index.
-        left:     '0px',      // Meter left offset.
-        top:      '0px',      // Meter top offset.
-        right:    'auto',     // Meter right offset.
-        bottom:   'auto',     // Meter bottom offset.
-        margin:   '0 0 0 0',  // Meter margin. Helps with centering the counter when left: 50%;
-
-        // Theme
-        theme: 'dark', // Meter theme. Build in: 'dark', 'light', 'transparent', 'colorful'.
-        heat:  1,      // Allow themes to use coloring by FPS heat. 0 FPS = red, maxFps = green.
-
-        // Graph
-        graph:   1, // Whether to show history graph.
-        history: 50 // How many history states to show in a graph.
-    });
-
   /* -------------------------------------------------------------------------------------------------------------- 
                                              Game Loop Function 
   -------------------------------------------------------------------------------------------------------------- */
   
   function Loop() {
-    meter.tickStart();
     
     if (isPlaying == true) {
 
@@ -114,23 +82,38 @@
       } else if(level === 1) {
         Level1();
         drawPlayer();
+        //Level Info
+        new TextDraw("Level 1: Get to the exit", 20, 30, "#fff", "15px");
       } else if(level === 2) {
         Level2();
         drawPlayer();
+        //Level Info
+        new TextDraw("Level 2: You can slide up walls", 20, 30, "#fff", "15px");
       } else if(level === 3) {
         Level3();
         drawPlayer();
+        //Level Info
+        new TextDraw("Level 3: More walls more slides", 20, 30, "#fff", "15px");
       } else if(level === 4) {
         Level4();
         drawPlayer();
+
+        //Level Info
+        new TextDraw("Level 4: R: Red, G: Green, B: Blue, SPACE: Less Gravity", 20, 30, "#fff", "15px");
       } else if(level === 5) {
         Level5();
         drawPlayer();
+
+        //Level Info
+        new TextDraw("Level 5: Get to the exit", 20, 30, "#fff", "15px");
       } else if(level === 6) {
         Level6();
         drawPlayer();
+
+        //Level Info
+        new TextDraw("Level 6: Dont Touch Yellow blocks", 20, 30, "#fff", "15px");
       } else {
-        console.log("Game over - Still in development - Torean Joel 2015");
+        console.log("Game over - Still in development - Torean Joel 2017");
         ctx.fillStyle = "#000";
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
         isPlaying = false;
@@ -152,7 +135,6 @@
       movePlayer();  
       Collisions();
 
-      meter.tick();
       requestAnimFrame(Loop);
     }
   }
@@ -362,10 +344,107 @@
                               Drawing  objects to Canvase as per level 
   -------------------------------------------------------------------------------------------------------------- */
 
+var parts = [],
+    partCount = 60,   
+    partsFull = false,    
+    hueRange = 100,
+    globalTick = 0,
+    rand = function(min, max){
+        return Math.floor( (Math.random() * (max - min + 1) ) + min);
+    };
+
+    var Part = function(){
+      this.reset();
+    };
+
+    Part.prototype.reset = function(){
+      this.startRadius = 12;
+      this.radius = this.startRadius;
+      this.x = Player.x + (Player.width/2);
+      this.y = Player.y + (Player.height/2);      
+      this.vx = 0;
+      this.vy = 0;
+      this.hue = Player.hue;
+      this.saturation = Player.saturation;
+      this.lightness = Player.lightness;
+      this.startAlpha = rand(1, 10) / 100;
+      this.alpha = this.startAlpha;
+      this.decayRate = .1;  
+      this.startLife = 7;
+      this.life = this.startLife;
+      this.lineWidth = rand(1, 3);
+    }
+        
+    Part.prototype.update = function(){  
+      this.vx += (rand(0, 200) - 100) / 1500;
+      this.vy -= this.life/50;  
+      this.x += this.vx;
+      this.y += this.vy;  
+      this.alpha = this.startAlpha * (this.life / this.startLife);
+      this.radius = this.startRadius * (this.life / this.startLife);
+      this.life -= this.decayRate;  
+      if(
+        this.x > canvasWidth + this.radius || 
+        this.x < -this.radius ||
+        this.y > canvasHeight + this.radius ||
+        this.y < -this.radius ||
+        this.life <= this.decayRate
+      ){
+        this.reset();  
+      }  
+    };
+      
+    Part.prototype.render = function(){
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      ctx.fillStyle = ctx.strokeStyle = 'hsla('+this.hue+', '+this.saturation+'%, '+this.lightness+'%, '+this.alpha+')';
+      ctx.lineWidth = this.lineWidth;
+      ctx.fill();
+      ctx.stroke();
+    };
+
+    //create new instance of particles
+    var createParts = function(){
+      if(!partsFull){
+        if(parts.length > partCount){
+          partsFull = true;
+        } else {
+          parts.push(new Part()); 
+        }
+      }
+    };
+      
+    //update particles position form array
+    var updateParts = function(){
+      var i = parts.length;
+      while(i--){
+        parts[i].update();
+      }
+    };
+
+    //draw particles from array
+    var renderParts = function(){
+      var i = parts.length;
+      while(i--){
+        parts[i].render();
+      }   
+    };
+        
+    //particles main loop
+    var loop = function(){
+      createParts();
+      updateParts();
+      renderParts();
+      globalTick++;
+    };
+
+
   function drawPlayer() {
     ctx.fillStyle = Player.playerColour;
     ctx.fillRect(Player.x, Player.y, Player.width, Player.height);
-    
+
+    //run loop of particles
+    loop();
   }
 
   function drawTeleporters() {
@@ -458,7 +537,6 @@
           Player.velY = 1;
       }
       if(touching === "bottom"){ 
-        console.log("Touching bottom og player");
           Player.jumping = false;
           Player.velY = -0.5;
           Player.y = thisGround.y - Player.height;
@@ -617,12 +695,21 @@
     //checking keys pressed
     if (keys[82]) {
       Player.playerColour = '#F00'; //red
+      Player.hue = 355;
+      Player.saturation = 77;
+      Player.lightness = 52;
     }
     if (keys[71]) {
       Player.playerColour = '#6FDE41'; //green
+      Player.hue = 138;
+      Player.saturation = 97;
+      Player.lightness = 38;
     }
     if (keys[66]) {
       Player.playerColour = '#81CAFF'; //blue
+      Player.hue = 210;
+      Player.saturation = 79;
+      Player.lightness = 55;
     }
     (keys[38]) ? Player.isUpKey = true : Player.isUpKey = false;
     (keys[39]) ? Player.isRightKey = true : Player.isRightKey = false;
@@ -651,6 +738,9 @@
     this.isPowerJump = false;
     this.jumping = false;
     this.playerColour = "#81CAFF";
+    this.hue = 210;
+    this.saturation = 79;
+    this.lightness = 55;
   }
 
   function Platform(x,y,width,height,color) {
