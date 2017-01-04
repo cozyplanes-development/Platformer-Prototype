@@ -345,9 +345,9 @@
   -------------------------------------------------------------------------------------------------------------- */
 
 var parts = [],
-    partCount = 60,   
+    partCount = 30,   
     partsFull = false,    
-    hueRange = 100,
+    hueRange = 50,
     globalTick = 0,
     rand = function(min, max){
         return Math.floor( (Math.random() * (max - min + 1) ) + min);
@@ -358,7 +358,7 @@ var parts = [],
     };
 
     Part.prototype.reset = function(){
-      this.startRadius = 12;
+      this.startRadius = rand(5,15);
       this.radius = this.startRadius;
       this.x = Player.x + (Player.width/2);
       this.y = Player.y + (Player.height/2);      
