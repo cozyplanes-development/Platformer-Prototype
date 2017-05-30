@@ -1,0 +1,22 @@
+{
+  "name": "RGBlock",
+  "version": "0.0.1",
+  "description": "Platformer where the player needs to reach the end with the time gathered from finishing the previous levels - dont forget to change colors to use the correct platforms!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Torean/Platformer-Prototype",
+  "keywords": [
+    "RGB",
+    "Platformer",
+    "Game Development",
+    "Canvas",
+    "demo"
+  ],
+  "author": "Torean Joel",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}

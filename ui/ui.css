@@ -11,13 +11,17 @@ body {
 }
 
 canvas {
-	padding-top: 30px;
     display: none;
 }
 
 #controls {
     text-align: center;
     display: none;
+    margin: 0 auto;
+}
+
+#controls > img {
+    max-width: 460px;
 }
 
 /*Animation for blinking text*/
@@ -26,7 +30,8 @@ canvas {
 }
 
 #start {
-    margin: 180px 0;
+    margin: 180px auto;
+    width: 645px;
 }
 
 .heading {
@@ -41,7 +46,6 @@ canvas {
 	font-size: 28px;
 	font-family: PixelFont;
     text-align: right;
-    padding-right: 10%;
     animation: blinker 1s linear infinite;
 }
 
@@ -49,10 +53,8 @@ canvas {
     color: #FFF;
     font-size: 20px;
     font-family: PixelFont;
-    padding-right: 10%;
     position: relative;
     top: 160px;
-    left: 15px;
 }
 
 #fromControls {
